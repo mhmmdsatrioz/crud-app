@@ -8,6 +8,7 @@ function App() {
   const [data, setData] = useState([]);
   // ======== LOADING ========
   const [loadings,setLoadings] = useState(false);
+  const [loadCetak, setLoadCetak] = useState(false);
   // ======== DATA ID ========
   const [dataId, setDataId] = useState([]);
   const [post, setPost] = useState({
@@ -37,7 +38,7 @@ function App() {
       .then((res) => {
         console.log(res)
           setLoadings(false)
-        toast.success('Delete Success')
+        toast.success('Delete Berhasil')
         setIsModalVisible(false);
         GetData();
       })
@@ -69,12 +70,14 @@ function App() {
   // ============ END ============
 
   const handleCetak = (e) => {
+    setLoadCetak(true)
     e.preventDefault();
     axios
       .post("https://jsonplaceholder.typicode.com/posts")
       .then((res) => {
-        console.log("berhasil");
-        console.log(res.data);
+        setLoadCetak(false);
+        toast.success('Cetak Berhasil')
+        setIsModalVisible(false);
         // getData()
       })
       .catch((err) => console.log(err));
@@ -126,6 +129,7 @@ function App() {
             }}
           >
             <Button
+            loading={loadCetak}
               className="btn btn-success"
               onClick={handleCetak}
               style={{ display: "flex", alignItems: "center" }}
